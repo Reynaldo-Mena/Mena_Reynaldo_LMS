@@ -23,7 +23,7 @@ public class Database {
                 String title = dataArr[1];
                 String author = dataArr[2];
 
-                Book book = new Book(id, author, title);
+                Book book = new Book(id, author, title,false);
                 collection.put(id, book);
 
             }
@@ -46,10 +46,51 @@ public class Database {
 
     }
 
+    public Collection<Book> bookSearch(String title) {
+        Collection<Book> result = new ArrayList<Book>();
+        for (Book book : viewBooks()) {
+            if (title.equals(book.getTitle())) {
+                result.add(book);
+            }
+        }
+        return result;
+    }
+
+
     public void print() {
         Collection<Book> books = viewBooks();
         for (Book book : books) {
             System.out.println(book.toString());
         }
     }
+
+    public boolean checkOut(int id) {
+      Book bookToCheckOut = collection.get(id);
+      if(bookToCheckOut == null){
+          System.out.println("This barcode does not exist. ");
+          return false;
+      }if(bookToCheckOut.isCheckedOut()) {
+            System.out.print("This book is already checked out. ");
+            return false;
+      }
+      bookToCheckOut.setCheckedOut(true);
+        return true;
+
+    }
+    public boolean checkIn(int id) {
+        Book bookToCheckIn = collection.get(id);
+        if(bookToCheckIn == null){
+            System.out.println("This barcode does not exist. ");
+            return false;
+        }if(!bookToCheckIn.isCheckedOut()) {
+            System.out.print("This book is already checked in. ");
+            return false;
+        }
+        bookToCheckIn.setCheckedOut(false);
+        return true;
+
+    }
+
+
+
 }

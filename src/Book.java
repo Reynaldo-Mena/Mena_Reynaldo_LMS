@@ -1,13 +1,23 @@
 public class Book {
+    private boolean checkedOut;
     private int id;
     private String author;
     private String title;
 
 
-    public Book(int id, String author, String title) {
+    public Book(int id, String author, String title, boolean checkedOut) {
         this.id = id;
         this.author = author;
         this.title = title;
+        this.checkedOut = checkedOut;
+    }
+
+    public boolean isCheckedOut() {
+        return checkedOut;
+    }
+
+    public void setCheckedOut(boolean checkedOut) {
+        this.checkedOut = checkedOut;
     }
 
     public int getId() {
@@ -36,6 +46,6 @@ public class Book {
     @Override
     public String toString(){
 
-        return "Id: " + id + ", Title: " + title + ", Author: " + author;
+        return "Id: " + id + ", Title: " + title + ", Author: " + author + ",  checkedOut? " + checkedOut;
     }
 }
