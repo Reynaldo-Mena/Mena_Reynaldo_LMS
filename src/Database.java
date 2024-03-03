@@ -2,6 +2,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+/**
+ * Reynaldo Mena
+ *
+ * Database of all books in LMS
+ */
 public class Database {
 
    private Map<Integer,Book> collection;
@@ -64,6 +69,11 @@ public class Database {
         }
     }
 
+    /**
+     * Function checks out book from database
+     * @param id Books id
+     * @return true if successful
+     */
     public boolean checkOut(int id) {
       Book bookToCheckOut = collection.get(id);
       if(bookToCheckOut == null){
