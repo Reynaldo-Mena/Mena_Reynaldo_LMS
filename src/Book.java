@@ -1,3 +1,9 @@
+/**
+ * Reynaldo Mena
+ * Software Development 1 - CEN 3024c
+ *  3/3/2024
+ * Book class full of setters and getters for info
+ */
 public class Book {
     private boolean checkedOut;
     private int id;

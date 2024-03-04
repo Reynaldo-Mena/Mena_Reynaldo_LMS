@@ -4,7 +4,8 @@ import java.util.*;
 
 /**
  * Reynaldo Mena
- *
+ *Software Development 1 - CEN 3024c
+ * 3/3/2024
  * Database of all books in LMS
  */
 public class Database {
@@ -16,6 +17,14 @@ public class Database {
         this.collection = new HashMap<>();
     }
 
+    /**
+     * addFromFile
+     * method to add book to database from file
+     * @param filename
+     * reads data from a file of books and adds data to collection of books
+     * argument - filename
+     * @return boolean value
+     */
     public boolean addFromFile(String filename) {
 
         try {
@@ -34,23 +43,41 @@ public class Database {
             }
             myReader.close();
         } catch (Exception e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+            System.out.println("File does not exist, Please try again. ");
+
             return false;
         }
         return true;
     }
+
+    /**
+     * remove
+     *method called remove, removes books from the collection by barcode/id
+     * argument id
+     * @return book that was removed
+     */
     public Book remove(int id){
        return collection.remove(id);
 
     }
 
+    /**
+     * viewBooks
+     * method to view books
+     * @return all books in database
+     */
     public Collection<Book> viewBooks() {
 
         return collection.values();
 
     }
 
+    /**
+     * booksearch
+     * method to search for books
+     * argument title
+     * @return Collection<Book> of books that match titles
+     */
     public Collection<Book> bookSearch(String title) {
         Collection<Book> result = new ArrayList<Book>();
         for (Book book : viewBooks()) {
@@ -61,7 +88,10 @@ public class Database {
         return result;
     }
 
-
+    /**
+     * print
+     * method that prints current data
+     */
     public void print() {
         Collection<Book> books = viewBooks();
         for (Book book : books) {
@@ -70,9 +100,10 @@ public class Database {
     }
 
     /**
-     * Function checks out book from database
-     * @param id Books id
-     * @return true if successful
+     * checkOut
+     * method checks out book from database
+     * arguments id Books id
+     * @return true if successfully checked out
      */
     public boolean checkOut(int id) {
       Book bookToCheckOut = collection.get(id);
@@ -87,6 +118,13 @@ public class Database {
         return true;
 
     }
+
+    /**
+     * checkIn
+     * method to check in books
+     * argument id
+     * @return true if successfully checked in
+     */
     public boolean checkIn(int id) {
         Book bookToCheckIn = collection.get(id);
         if(bookToCheckIn == null){

@@ -1,28 +1,48 @@
 import java.util.Collection;
 import java.util.Scanner;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+/**
+ * Reynaldo Mena
+ * Software Development 1 - CEN 3024c
+ * 3/3/2024
+ * Overall program objective is to create a functioning Library management system with check in/out functions and
+ * storing that information in database.
+ */
 public class Main {
     public static void main(String[] args) {
+
+        /**
+         * Creating database and scanner object
+         * asking for file, whiel loops to make sure
+         * file entered is correct
+         */
         Database db = new Database();
         Scanner sc = new Scanner(System.in);
+        boolean fileWasAdded = false;
+        while (!fileWasAdded) {
+            System.out.println("Please input file name.");
 
-        System.out.println("Please input file name.");
-
-        String filename = sc.nextLine();
-        db.addFromFile(filename);
-
+            String filename = sc.nextLine();
+            fileWasAdded = db.addFromFile(filename);
+        }
         System.out.println("Printing all books in database: ");
         db.print();
 
-
+        /**
+         * asking for barcode/id
+         * take int input
+         * removes desired book then prints database again to confirm
+         */
         System.out.println("Please enter a barcode number to remove: ");
         int id = Integer.parseInt(sc.nextLine());
         db.remove(id);
         System.out.println("This barcode was succussfully deleted. ");
         db.print();
 
+        /**
+         * asks for book by title
+         * if multiple of same book it shows option to pick which one by barcode
+         */
         System.out.println("Please enter the title of book you want to remove: ");
         String bookName = sc.nextLine();
         System.out.println("Printing available books: ");
@@ -31,12 +51,18 @@ public class Main {
             System.out.println(book.toString());
 
         }
+
         System.out.println("Please enter a barcode number to remove: ");
         id = Integer.parseInt(sc.nextLine());
         db.remove(id);
         System.out.println("This barcode was succussfully deleted. ");
         db.print();
 
+        /**
+         * asks user for book to check out
+         * checks database if multiple select which barcode
+         * if successfully check out it lets you know
+         */
         System.out.println("Please enter book title to check out: ");
         bookName = sc.nextLine();
         System.out.println("Printing available books: ");
@@ -54,6 +80,12 @@ public class Main {
         db.print();
         }
 
+        /**
+         * asks user to check in book
+         * print database
+         * check in book with barcode
+         * prints confirmation
+         */
         System.out.println("Please enter book title to check in: ");
         bookName = sc.nextLine();
         System.out.println("Printing available books: ");
