@@ -115,6 +115,10 @@ public class Database {
             return false;
       }
       bookToCheckOut.setCheckedOut(true);
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_YEAR, 14);
+        bookToCheckOut.setDueDate(cal.getTime());
+
         return true;
 
     }
@@ -135,8 +139,19 @@ public class Database {
             return false;
         }
         bookToCheckIn.setCheckedOut(false);
+        bookToCheckIn.setDueDate(null);
         return true;
 
+    }
+
+    /**
+     * gets book from collection for testing
+     * @param id book Id
+     * @return book
+     */
+    protected Book getBook(int id){
+
+       return collection.get(id);
     }
 
 

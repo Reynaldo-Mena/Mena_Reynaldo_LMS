@@ -1,3 +1,5 @@
+import java.util.Date;
+
 /**
  * Reynaldo Mena
  * Software Development 1 - CEN 3024c
@@ -9,6 +11,7 @@ public class Book {
     private int id;
     private String author;
     private String title;
+    private Date dueDate;
 
 
     public Book(int id, String author, String title, boolean checkedOut) {
@@ -16,6 +19,15 @@ public class Book {
         this.author = author;
         this.title = title;
         this.checkedOut = checkedOut;
+        this.dueDate = null;
+    }
+
+    public Date getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
     }
 
     public boolean isCheckedOut() {
@@ -52,6 +64,6 @@ public class Book {
     @Override
     public String toString(){
 
-        return "Id: " + id + ", Title: " + title + ", Author: " + author + ",  checkedOut? " + checkedOut;
+        return "Id: " + id + ", Title: " + title + ", Author: " + author + ",  checkedOut? " + checkedOut + ", Due date: " + dueDate;
     }
 }

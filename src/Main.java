@@ -11,103 +11,35 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        /**
-         * Creating database and scanner object
-         * asking for file, whiel loops to make sure
-         * file entered is correct
-         */
         Database db = new Database();
-        Scanner sc = new Scanner(System.in);
-        boolean fileWasAdded = false;
-        while (!fileWasAdded) {
-            System.out.println("Please input file name.");
 
-            String filename = sc.nextLine();
-            fileWasAdded = db.addFromFile(filename);
-        }
-        System.out.println("Printing all books in database: ");
-        db.print();
 
-        /**
-         * asking for barcode/id
-         * take int input
-         * removes desired book then prints database again to confirm
-         */
-        System.out.println("Please enter a barcode number to remove: ");
-        int id = Integer.parseInt(sc.nextLine());
-        db.remove(id);
-        System.out.println("This barcode was succussfully deleted. ");
-        db.print();
+        System.out.println("Welcome to Library Management System! \n");
 
-        /**
-         * asks for book by title
-         * if multiple of same book it shows option to pick which one by barcode
-         */
-        System.out.println("Please enter the title of book you want to remove: ");
-        String bookName = sc.nextLine();
-        System.out.println("Printing available books: ");
-        Collection<Book> sameName = db.bookSearch(bookName);
-        for(Book book:sameName){
-            System.out.println(book.toString());
+        int num;
+        do {
+            System.out.println("0. Exit\n1. Add Books \n2. Remove Books by barcode \n3. Remove Book by Title \n4. Check Out book \n5. Check In Book \n6. Display Contents of Database ");
+            Scanner sc = new Scanner(System.in);
+            num = sc.nextInt();
 
-        }
+            switch (num) {
+                case 1: Menu.addBooks(db);
+                break;
+                case 2: Menu.removeBooksByBarcode(db);
+                break;
+                case 3: Menu.removeBooksByTitle(db);
+                break;
+                case 4: Menu.checkOut(db);
+                break;
+                case 5: Menu.checkIn(db);
+                break;
+                case 6: Menu.displayContents(db);
+                break;
 
-        System.out.println("Please enter a barcode number to remove: ");
-        id = Integer.parseInt(sc.nextLine());
-        db.remove(id);
-        System.out.println("This barcode was succussfully deleted. ");
-        db.print();
 
-        /**
-         * asks user for book to check out
-         * checks database if multiple select which barcode
-         * if successfully check out it lets you know
-         */
-        System.out.println("Please enter book title to check out: ");
-        bookName = sc.nextLine();
-        System.out.println("Printing available books: ");
-
-        sameName = db.bookSearch(bookName);
-        for(Book book:sameName){
-            if(!book.isCheckedOut()){
-                System.out.println(book.toString());
             }
-        }
-        System.out.println("Please select book by barcode number: ");
-        id = Integer.parseInt(sc.nextLine());
-        if(db.checkOut(id)){
-        System.out.println("Successfully checked out. ");
-        db.print();
-        }
+        } while (num != 0) ;
 
-        /**
-         * asks user to check in book
-         * print database
-         * check in book with barcode
-         * prints confirmation
-         */
-        System.out.println("Please enter book title to check in: ");
-        bookName = sc.nextLine();
-        System.out.println("Printing available books: ");
-        sameName = db.bookSearch(bookName);
-        for(Book book:sameName){
-            if(book.isCheckedOut()){
-                System.out.println(book.toString());
-            }
-        }
-        System.out.println("Please select book by barcode number: ");
-        id = Integer.parseInt(sc.nextLine());
-        if(db.checkIn(id)){
-            System.out.println("Successfully checked in. ");
-            db.print();
-        }
 
     }
-
-
-
-
-
-
-
 }
