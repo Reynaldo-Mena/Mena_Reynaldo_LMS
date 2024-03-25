@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Scanner;
@@ -9,59 +10,84 @@ public class Menu {
      * asking for file, whiel loops to make sure
      * file entered is correct
      */
-    public static void addBooks(Database db){
-        Scanner sc = new Scanner(System.in);
+    public static void addBooks(Database db) {
         boolean fileWasAdded = false;
         while (!fileWasAdded) {
-            System.out.println("Please input file name.");
+            String filename = JOptionPane.showInputDialog(null, "Please input file name:");
+            if (filename == null) {
 
-            String filename = sc.nextLine();
+                return;
+            }
             fileWasAdded = db.addFromFile(filename);
+            if (!fileWasAdded) {
+                JOptionPane.showMessageDialog(null, "File not found or error occurred. Please try again.");
+            }
         }
-        System.out.println("Printing all books in database: ");
+        JOptionPane.showMessageDialog(null, "Printing all books in database:");
         db.print();
-
     }
-
     /**
      * asking for barcode/id
      * take int input
      * removes desired book then prints database again to confirm
      */
     public static void removeBooksByBarcode(Database db){
-        Scanner sc = new Scanner(System.in);
+        String userInput = JOptionPane.showInputDialog(null, "Please enter a barcode number to remove:");
+        if (userInput != null) {
+            try {
 
-        System.out.println("Please enter a barcode number to remove: ");
-        int id = Integer.parseInt(sc.nextLine());
-        db.remove(id);
-        System.out.println("This barcode was succussfully deleted. ");
-        db.print();
-    }
+                int id = Integer.parseInt(userInput);
+                Book bookRemoved = db.remove(id);
+                if(bookRemoved != null) {
+                    JOptionPane.showMessageDialog(null, "Barcode " + id + " was successfully deleted.");
+                    displayContents(db);
+                }else {
+                    JOptionPane.showMessageDialog(null,"Barcode " + id + " was not found please try again.");
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid barcode number.");
+            }
+        }
+        }
+
+
 
     /**
      * asks for book by title
      * if multiple of same book it shows option to pick which one by barcode
      */
     public static void removeBooksByTitle(Database db){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Please enter the title of book you want to remove: ");
-        String bookName = sc.nextLine();
-        System.out.println("Printing available books: ");
-        Collection<Book> sameName = db.bookSearch(bookName);
-        for(Book book:sameName){
-            System.out.println(book.toString());
+        String bookName = JOptionPane.showInputDialog(null, "Please enter the title of the book you want to remove:");
+        if (bookName != null) {
+            StringBuilder booksInfo = new StringBuilder("Printing available books:\n");
+            Collection<Book> sameName = db.bookSearch(bookName);
+            for (Book book : sameName) {
+                booksInfo.append(book.toString()).append("\n");
+            }
+            JOptionPane.showMessageDialog(null, booksInfo.toString());
 
+            String idInput = JOptionPane.showInputDialog(null, "Please enter a barcode number to remove:");
+            if (idInput != null) {
+                try {
+                    int id = Integer.parseInt(idInput);
+                    Book titleRemoved = db.remove(id);
+
+                    if (titleRemoved != null) {
+                        JOptionPane.showMessageDialog(null, "Barcode " + id + " was successfully deleted.");
+                        displayContents(db);
+                    } else {
+                        JOptionPane.showMessageDialog(null,"Barcode " + id + " was not found please try again.");
+                    }
+                    }catch(NumberFormatException e){
+                    JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid barcode number.");
+                }
+                }
+            }
         }
 
-        System.out.println("Please enter a barcode number to remove: ");
-        int id = Integer.parseInt(sc.nextLine());
-        db.remove(id);
-        System.out.println("This barcode was succussfully deleted. ");
-        db.print();
 
 
 
-    }
 
     /**
      * asks user for book to check out
@@ -69,25 +95,33 @@ public class Menu {
      * if successfully check out it lets you know
      */
     public static void checkOut(Database db){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Please enter book title to check out: ");
-        String bookName = sc.nextLine();
-        System.out.println("Printing available books: ");
+        String bookName = JOptionPane.showInputDialog(null, "Please enter the title of the book you want to check out:");
+        if (bookName != null) {
+            StringBuilder avaBooks = new StringBuilder("Printing available books:\n");
+            Collection<Book> sameName = db.bookSearch(bookName);
+            for (Book book : sameName) {
+                if (!book.isCheckedOut()) {
+                    avaBooks.append(book.toString()).append("\n");
+                }
+            }
+            JOptionPane.showMessageDialog(null, avaBooks.toString());
 
-        Collection<Book> sameName = db.bookSearch(bookName);
-        for(Book book:sameName){
-            if(!book.isCheckedOut()){
-                System.out.println(book.toString());
+            String barcodeInput = JOptionPane.showInputDialog(null, "Please select a book by barcode number:");
+            if (barcodeInput != null) {
+                try {
+                    int id = Integer.parseInt(barcodeInput);
+                    if (db.checkOut(id)) {
+                        JOptionPane.showMessageDialog(null, "Successfully checked out.");
+                        db.print();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "The selected book is not available for checkout.");
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid barcode number.");
+                }
             }
         }
-        System.out.println("Please select book by barcode number: ");
-        int id = Integer.parseInt(sc.nextLine());
-        if(db.checkOut(id)){
-            System.out.println("Successfully checked out. ");
-            db.print();
         }
-
-    }
 
     /**
      * asks user to check in book
@@ -96,29 +130,38 @@ public class Menu {
      * prints confirmation
      */
      public static void checkIn(Database db){
-         Scanner sc = new Scanner(System.in);
-         System.out.println("Please enter book title to check in: ");
-         String bookName = sc.nextLine();
-         System.out.println("Printing available books: ");
-         Collection<Book> sameName = db.bookSearch(bookName);
-         for(Book book:sameName){
-             if(book.isCheckedOut()){
-                 System.out.println(book.toString());
+         String bookName = JOptionPane.showInputDialog(null, "Please enter the title of the book you want to check in:");
+         if (bookName != null) {
+             StringBuilder checkedOutBooks = new StringBuilder("Printing checked out books:\n");
+             Collection<Book> sameName = db.bookSearch(bookName);
+             for (Book book : sameName) {
+                 if (book.isCheckedOut()) {
+                     checkedOutBooks.append(book.toString()).append("\n");
+                 }
+             }
+             JOptionPane.showMessageDialog(null, checkedOutBooks.toString());
+
+             String barcodeInput = JOptionPane.showInputDialog(null, "Please select a book by barcode number:");
+             if (barcodeInput != null) {
+                 try {
+                     int id = Integer.parseInt(barcodeInput);
+                     if (db.checkIn(id)) {
+                         JOptionPane.showMessageDialog(null, "Successfully checked in.");
+                         displayContents(db);
+                     } else {
+                         JOptionPane.showMessageDialog(null, "The selected book is not checked out.");
+                     }
+                 } catch (NumberFormatException e) {
+                     JOptionPane.showMessageDialog(null, "Invalid input. Please enter a valid barcode number.");
+                 }
              }
          }
-         System.out.println("Please select book by barcode number: ");
-         int id = Integer.parseInt(sc.nextLine());
-         if(db.checkIn(id)){
-             System.out.println("Successfully checked in. ");
-             db.print();
-         }
-
 
      }
 
      public static void displayContents(Database db){
-
-        db.print();
+         JOptionPane.showMessageDialog(null, "Printing all books in database:");
+         db.print();
 
      }
 }

@@ -1,72 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="MainFrame">
-  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="7" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="7" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="500" height="521"/>
+      <xy x="20" y="18" width="780" height="710"/>
     </constraints>
-    <properties/>
+    <properties>
+      <background color="-14145497"/>
+      <foreground color="-3927323"/>
+    </properties>
     <border type="none"/>
     <children>
       <component id="fee0f" class="javax.swing.JButton" binding="a1Button" default-binding="true">
         <constraints>
-          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="1:"/>
+          <background color="-8353918"/>
+          <enabled value="true"/>
+          <font name="Unispace" size="12" style="2"/>
+          <horizontalTextPosition value="11"/>
+          <text value="1: Add books to database"/>
         </properties>
       </component>
       <component id="141fc" class="javax.swing.JButton" binding="a2Button" default-binding="true">
         <constraints>
-          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="2:"/>
+          <background color="-8353918"/>
+          <font name="Unispace" size="12" style="2"/>
+          <text value="2: Remove books by Barcode"/>
         </properties>
       </component>
       <component id="b7597" class="javax.swing.JButton" binding="a3Button" default-binding="true">
         <constraints>
-          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="3" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="3:"/>
+          <background color="-8353918"/>
+          <font name="Unispace" size="12" style="2"/>
+          <text value="3: Remove books by Title"/>
         </properties>
       </component>
-      <component id="5b360" class="javax.swing.JButton" binding="a4Button" default-binding="true">
+      <component id="5b360" class="javax.swing.JButton" binding="a4CheckoutBookButton" default-binding="true">
         <constraints>
-          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="4:"/>
+          <background color="-8353918"/>
+          <font name="Unispace" size="12" style="2"/>
+          <text value="4: Checkout book"/>
         </properties>
       </component>
-      <component id="18ff0" class="javax.swing.JButton" binding="a5Button" default-binding="true">
+      <component id="54b32" class="javax.swing.JLabel">
         <constraints>
-          <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="5:"/>
+          <background color="-67841"/>
+          <font name="Unispace" size="20" style="2"/>
+          <foreground color="-67841"/>
+          <text value="Please select an option:"/>
         </properties>
       </component>
-      <component id="12066" class="javax.swing.JButton" binding="a6Button" default-binding="true">
+      <component id="18ff0" class="javax.swing.JButton" binding="a5CheckInButton" default-binding="true">
         <constraints>
-          <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="5" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="6:"/>
+          <background color="-8353918"/>
+          <enabled value="true"/>
+          <font name="Unispace" size="12" style="2"/>
+          <text value="5: Check In "/>
         </properties>
       </component>
       <vspacer id="fa7ad">
         <constraints>
-          <grid row="0" column="0" row-span="7" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="5" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
-      <component id="54b32" class="javax.swing.JLabel">
+      <component id="eb465" class="javax.swing.JLabel">
         <constraints>
-          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Please select an option:"/>
+          <icon value="library-icon2 (1).jpg"/>
+          <text value=""/>
         </properties>
       </component>
     </children>

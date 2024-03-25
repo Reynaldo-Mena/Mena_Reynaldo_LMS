@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -57,6 +58,7 @@ public class Database {
      * @return book that was removed
      */
     public Book remove(int id){
+
        return collection.remove(id);
 
     }
@@ -94,10 +96,15 @@ public class Database {
      */
     public void print() {
         Collection<Book> books = viewBooks();
+        StringBuilder output = new StringBuilder();
+        output.append("Books in the database:\n");
         for (Book book : books) {
-            System.out.println(book.toString());
+            output.append(book.toString()).append("\n");
         }
+        JOptionPane.showMessageDialog(null, output.toString());
     }
+
+
 
     /**
      * checkOut
