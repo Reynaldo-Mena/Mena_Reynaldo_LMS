@@ -38,7 +38,7 @@ public class Database {
                 String title = dataArr[1];
                 String author = dataArr[2];
 
-                Book book = new Book(id, author, title,false);
+                Book book = new Book(id, author, title, "",false);
                 collection.put(id, book);
 
             }

@@ -11,15 +11,34 @@ public class Book {
     private int id;
     private String author;
     private String title;
+    private String genre;
     private Date dueDate;
 
 
-    public Book(int id, String author, String title, boolean checkedOut) {
+    public Book(int id, String author, String title, String genre, boolean checkedOut) {
         this.id = id;
         this.author = author;
         this.title = title;
+        this.genre = genre;
         this.checkedOut = checkedOut;
         this.dueDate = null;
+    }
+
+    public Book(int id, String author, String title, String genre, boolean checkedOut, Date dueDate) {
+        this.id = id;
+        this.author = author;
+        this.title = title;
+        this.genre = genre;
+        this.checkedOut = checkedOut;
+        this.dueDate = dueDate;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     public Date getDueDate() {
