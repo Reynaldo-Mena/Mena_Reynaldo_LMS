@@ -1,4 +1,6 @@
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -31,12 +33,12 @@ public class JDBC {
         return connection;
     }
 
-    private static ResultSet execute(Connection conn, String sql) {
+    private static Statement execute(Connection conn, String sql) {
         try {
             Statement statement = conn.createStatement();
             createDb(statement); // create the db in case this is the first connection
             statement.execute(sql);
-            return statement.getResultSet();
+            return statement;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -61,7 +63,7 @@ public class JDBC {
 
         try (Connection conn = getConn()) {
             String sql = "SELECT * FROM books;";
-            ResultSet result = execute(conn, sql);
+            ResultSet result = execute(conn, sql).getResultSet();
 
             while(result.next()) {
                 int id = result.getInt("id");
@@ -69,13 +71,14 @@ public class JDBC {
                 String author = result.getString("author");
                 String genre = result.getString("genre");
                 boolean checkedOut = result.getBoolean("checkedOut");
+                System.out.println(checkedOut);
                 String dueDateStr = result.getString("dueDate");
-                Date dueDate = dueDateStr.equals("null") ? null : Date.valueOf(dueDateStr);
+                java.util.Date dueDate = dueDateStr.equals("null") ? null : new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(dueDateStr);;
 
                 books.add(new Book(id, author, title, genre, checkedOut, dueDate));
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException | ParseException e) {
             e.printStackTrace();
         }
         return books;
@@ -84,7 +87,7 @@ public class JDBC {
     public static Book getBookById(int id) {
         try (Connection conn = getConn()) {
             String sql = String.format("SELECT * FROM books WHERE id = %d;", id);
-            ResultSet result = execute(conn, sql);
+            ResultSet result = execute(conn, sql).getResultSet();
 
             if (result.next()) {
                 String title = result.getString("title");
@@ -92,12 +95,13 @@ public class JDBC {
                 String genre = result.getString("genre");
                 boolean checkedOut = result.getBoolean("checkedOut");
                 String dueDateStr = result.getString("dueDate");
-                Date dueDate = dueDateStr.equals("null") ? null : Date.valueOf(dueDateStr);
+             //   Date dueDate = dueDateStr.equals("null") ? null : Date.valueOf(dueDateStr);
+                java.util.Date dueDate = dueDateStr.equals("null") ? null : new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(dueDateStr);;
 
                 return new Book(id, author, title, genre, checkedOut, dueDate);
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException | ParseException e) {
             e.printStackTrace();
         }
 
@@ -109,7 +113,7 @@ public class JDBC {
 
         try (Connection conn = getConn()) {
             String sql = String.format("SELECT * FROM books WHERE title = \"%s\";", title);
-            ResultSet result = execute(conn, sql);
+            ResultSet result = execute(conn, sql).getResultSet();
 
             while(result.next()) {
                 int id = result.getInt("id");
@@ -117,12 +121,13 @@ public class JDBC {
                 String genre = result.getString("genre");
                 boolean checkedOut = result.getBoolean("checkedOut");
                 String dueDateStr = result.getString("dueDate");
-                Date dueDate = dueDateStr.equals("null") ? null : Date.valueOf(dueDateStr);
+               // Date dueDate = dueDateStr.equals("null") ? null : Date.valueOf(dueDateStr);
+                java.util.Date dueDate = dueDateStr.equals("null") ? null : new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(dueDateStr);;
 
                 books.add(new Book(id, author, title, genre, checkedOut, dueDate));
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException | ParseException e) {
             e.printStackTrace();
         }
         return books;
@@ -145,7 +150,7 @@ public class JDBC {
                     book.getGenre(),
                     book.isCheckedOut(),
                     book.getDueDate());
-            return execute(conn, sql) != null;
+            return execute(conn, sql).getUpdateCount() > 0;
         } catch(SQLException e) {
             e.printStackTrace();
             return false;
@@ -170,7 +175,7 @@ public class JDBC {
                     book.isCheckedOut(),
                     book.getDueDate(),
                     book.getId());
-            return execute(conn, sql) != null;
+            return execute(conn, sql).getUpdateCount() > 0;
         } catch(SQLException e) {
             e.printStackTrace();
             return false;
@@ -179,14 +184,21 @@ public class JDBC {
 
     // TODO: IMPLEMENT THIS
     public static boolean removeBook(int id) {
+        try (Connection conn = getConn()) {
+
+            String sql = String.format("DELETE FROM books WHERE id = %d;", id );
+        return execute(conn, sql).getUpdateCount() > 0;
+    } catch(SQLException e) {
+        e.printStackTrace();
         return false;
+    }
     }
 
     public static void main(String[] args) {
         // for testing
 //        System.out.println(getBooksByTitle("tuesday"));
-  //     Book book = new Book(5, "jhrt", "dujg", "uher", false, null);
- //       addBook(book);
-        System.out.println(getAllBooks());
+       Book book = new Book(14, "jhrt", "dujg", "uher", false, null);
+
+
     }
 }

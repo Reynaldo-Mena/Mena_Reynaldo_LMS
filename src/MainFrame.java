@@ -10,10 +10,9 @@ public class MainFrame extends JFrame {
     private JButton a5CheckInButton;
     private JPanel mainPanel;
 
-    public static  Menu menu = new Menu();
 
     public MainFrame(){
-        Database db2 = new Database();
+
         setContentPane(mainPanel);
         setTitle("LMS");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -25,31 +24,31 @@ public class MainFrame extends JFrame {
 
             public void actionPerformed(ActionEvent e) {
 
-                menu.addBooks(db2);
+                Menu.displayContents();
             }
         });
         a2Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                menu.removeBooksByBarcode(db2);
+                Menu.removeBooksByBarcode();
             }
         });
         a3Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                menu.removeBooksByTitle(db2);
+                Menu.removeBooksByTitle();
             }
         });
         a4CheckoutBookButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                menu.checkOut(db2);
+                Menu.checkOut();
             }
         });
         a5CheckInButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                menu.checkIn(db2);
+                Menu.checkIn();
             }
         });
     }

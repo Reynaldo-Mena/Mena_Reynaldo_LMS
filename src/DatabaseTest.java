@@ -13,13 +13,13 @@ class DatabaseTest {
     Database database;
 
 
-    @org.junit.jupiter.api.BeforeEach
-    void setUp() {
-        // supply test data to database object
-        database = new Database();
-        database.addFromFile("books.txt");
-
-    }
+//    @org.junit.jupiter.api.BeforeEach
+//    void setUp() {
+//        // supply test data to database object
+//        database = new Database();
+//        database.addFromFile("books.txt");
+//
+//    }
 
 
 
@@ -75,14 +75,14 @@ class DatabaseTest {
 
     }
 
-    @Test
-    void addFromFile() {
-        Database emptyDb = new Database();
-        emptyDb.addFromFile("books.txt");
-
-        assert emptyDb.viewBooks().size() == 6;
-
-
-
-    }
+//    @Test
+//    void addFromFile() {
+//        Database emptyDb = new Database();
+//        emptyDb.addFromFile("books.txt");
+//
+//        assert emptyDb.viewBooks().size() == 6;
+//
+//
+//
+//    }
 }

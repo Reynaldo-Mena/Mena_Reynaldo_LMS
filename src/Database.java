@@ -11,12 +11,12 @@ import java.util.*;
  */
 public class Database {
 
-   private Map<Integer,Book> collection;
+//   private Map<Integer,Book> collection;
 
 
-    public Database() {
-        this.collection = new HashMap<>();
-    }
+//    public Database() {
+//        this.collection = new HashMap<>();
+//    }
 
     /**
      * addFromFile
@@ -26,30 +26,30 @@ public class Database {
      * argument - filename
      * @return boolean value
      */
-    public boolean addFromFile(String filename) {
-
-        try {
-            File file = new File(filename);
-            Scanner myReader = new Scanner(file);
-            while (myReader.hasNextLine()) {
-                String bookdata = myReader.nextLine();
-                String[] dataArr = (bookdata.split(","));
-                int id = Integer.parseInt(dataArr[0]);
-                String title = dataArr[1];
-                String author = dataArr[2];
-
-                Book book = new Book(id, author, title, "",false);
-                collection.put(id, book);
-
-            }
-            myReader.close();
-        } catch (Exception e) {
-            System.out.println("File does not exist, Please try again. ");
-
-            return false;
-        }
-        return true;
-    }
+//    public boolean addFromFile(String filename) {
+//
+//        try {
+//            File file = new File(filename);
+//            Scanner myReader = new Scanner(file);
+//            while (myReader.hasNextLine()) {
+//                String bookdata = myReader.nextLine();
+//                String[] dataArr = (bookdata.split(","));
+//                int id = Integer.parseInt(dataArr[0]);
+//                String title = dataArr[1];
+//                String author = dataArr[2];
+//
+//                Book book = new Book(id, author, title, "",false);
+//                collection.put(id, book);
+//
+//            }
+//            myReader.close();
+//        } catch (Exception e) {
+//            System.out.println("File does not exist, Please try again. ");
+//
+//            return false;
+//        }
+//        return true;
+//    }
 
     /**
      * remove
@@ -57,9 +57,9 @@ public class Database {
      * argument id
      * @return book that was removed
      */
-    public Book remove(int id){
+    public static boolean remove(int id){
 
-       return collection.remove(id);
+       return JDBC.removeBook(id);
 
     }
 
@@ -68,9 +68,9 @@ public class Database {
      * method to view books
      * @return all books in database
      */
-    public Collection<Book> viewBooks() {
+    public static Collection<Book> viewBooks() {
 
-        return collection.values();
+        return JDBC.getAllBooks();
 
     }
 
@@ -80,21 +80,15 @@ public class Database {
      * argument title
      * @return Collection<Book> of books that match titles
      */
-    public Collection<Book> bookSearch(String title) {
-        Collection<Book> result = new ArrayList<Book>();
-        for (Book book : viewBooks()) {
-            if (title.equals(book.getTitle())) {
-                result.add(book);
-            }
-        }
-        return result;
+    public static Collection<Book> bookSearch(String title) {
+        return JDBC.getBooksByTitle(title);
     }
 
     /**
      * print
      * method that prints current data
      */
-    public void print() {
+    public static void print() {
         Collection<Book> books = viewBooks();
         StringBuilder output = new StringBuilder();
         output.append("Books in the database:\n");
@@ -112,8 +106,8 @@ public class Database {
      * arguments id Books id
      * @return true if successfully checked out
      */
-    public boolean checkOut(int id) {
-      Book bookToCheckOut = collection.get(id);
+    public static boolean checkOut(int id) {
+      Book bookToCheckOut = getBook(id);
       if(bookToCheckOut == null){
           System.out.println("This barcode does not exist. ");
           return false;
@@ -125,7 +119,7 @@ public class Database {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DAY_OF_YEAR, 14);
         bookToCheckOut.setDueDate(cal.getTime());
-
+        JDBC.updateBook(bookToCheckOut);
         return true;
 
     }
@@ -136,8 +130,8 @@ public class Database {
      * argument id
      * @return true if successfully checked in
      */
-    public boolean checkIn(int id) {
-        Book bookToCheckIn = collection.get(id);
+    public static boolean checkIn(int id) {
+        Book bookToCheckIn = getBook(id);
         if(bookToCheckIn == null){
             System.out.println("This barcode does not exist. ");
             return false;
@@ -147,6 +141,7 @@ public class Database {
         }
         bookToCheckIn.setCheckedOut(false);
         bookToCheckIn.setDueDate(null);
+        JDBC.updateBook(bookToCheckIn);
         return true;
 
     }
@@ -156,9 +151,9 @@ public class Database {
      * @param id book Id
      * @return book
      */
-    protected Book getBook(int id){
+    protected static Book getBook(int id){
 
-       return collection.get(id);
+       return JDBC.getBookById(id);
     }
 
 

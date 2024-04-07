@@ -20,7 +20,7 @@
           <enabled value="true"/>
           <font name="Unispace" size="12" style="2"/>
           <horizontalTextPosition value="11"/>
-          <text value="1: Add books to database"/>
+          <text value="1: Display Books"/>
         </properties>
       </component>
       <component id="141fc" class="javax.swing.JButton" binding="a2Button" default-binding="true">

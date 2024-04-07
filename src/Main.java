@@ -11,8 +11,6 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        Database db = new Database();
-
 
         System.out.println("Welcome to Library Management System! \n");
 
@@ -23,17 +21,17 @@ public class Main {
             num = sc.nextInt();
 
             switch (num) {
-                case 1: Menu.addBooks(db);
+             //   case 1: Menu.addBooks(db);
+             //   break;
+                case 2: Menu.removeBooksByBarcode();
                 break;
-                case 2: Menu.removeBooksByBarcode(db);
+                case 3: Menu.removeBooksByTitle();
                 break;
-                case 3: Menu.removeBooksByTitle(db);
+                case 4: Menu.checkOut();
                 break;
-                case 4: Menu.checkOut(db);
+                case 5: Menu.checkIn();
                 break;
-                case 5: Menu.checkIn(db);
-                break;
-                case 6: Menu.displayContents(db);
+                case 6: Menu.displayContents();
                 break;
 
 

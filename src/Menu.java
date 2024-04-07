@@ -10,37 +10,37 @@ public class Menu {
      * asking for file, whiel loops to make sure
      * file entered is correct
      */
-    public static void addBooks(Database db) {
-        boolean fileWasAdded = false;
-        while (!fileWasAdded) {
-            String filename = JOptionPane.showInputDialog(null, "Please input file name:");
-            if (filename == null) {
-
-                return;
-            }
-            fileWasAdded = db.addFromFile(filename);
-            if (!fileWasAdded) {
-                JOptionPane.showMessageDialog(null, "File not found or error occurred. Please try again.");
-            }
-        }
-        JOptionPane.showMessageDialog(null, "Printing all books in database:");
-        db.print();
-    }
+//    public static void addBooks(Database db) {
+//        boolean fileWasAdded = false;
+//        while (!fileWasAdded) {
+//            String filename = JOptionPane.showInputDialog(null, "Please input file name:");
+//            if (filename == null) {
+//
+//                return;
+//            }
+//            fileWasAdded = db.addFromFile(filename);
+//            if (!fileWasAdded) {
+//                JOptionPane.showMessageDialog(null, "File not found or error occurred. Please try again.");
+//            }
+//        }
+//        JOptionPane.showMessageDialog(null, "Printing all books in database:");
+//        db.print();
+//    }
     /**
      * asking for barcode/id
      * take int input
      * removes desired book then prints database again to confirm
      */
-    public static void removeBooksByBarcode(Database db){
+    public static void removeBooksByBarcode(){
         String userInput = JOptionPane.showInputDialog(null, "Please enter a barcode number to remove:");
         if (userInput != null) {
             try {
 
                 int id = Integer.parseInt(userInput);
-                Book bookRemoved = db.remove(id);
-                if(bookRemoved != null) {
+                boolean bookRemoved = Database.remove(id);
+                if(bookRemoved) {
                     JOptionPane.showMessageDialog(null, "Barcode " + id + " was successfully deleted.");
-                    displayContents(db);
+                    displayContents();
                 }else {
                     JOptionPane.showMessageDialog(null,"Barcode " + id + " was not found please try again.");
                 }
@@ -56,11 +56,11 @@ public class Menu {
      * asks for book by title
      * if multiple of same book it shows option to pick which one by barcode
      */
-    public static void removeBooksByTitle(Database db){
+    public static void removeBooksByTitle(){
         String bookName = JOptionPane.showInputDialog(null, "Please enter the title of the book you want to remove:");
         if (bookName != null) {
             StringBuilder booksInfo = new StringBuilder("Printing available books:\n");
-            Collection<Book> sameName = db.bookSearch(bookName);
+            Collection<Book> sameName = Database.bookSearch(bookName);
             for (Book book : sameName) {
                 booksInfo.append(book.toString()).append("\n");
             }
@@ -70,11 +70,11 @@ public class Menu {
             if (idInput != null) {
                 try {
                     int id = Integer.parseInt(idInput);
-                    Book titleRemoved = db.remove(id);
+                    boolean titleRemoved = Database.remove(id);
 
-                    if (titleRemoved != null) {
+                    if (titleRemoved) {
                         JOptionPane.showMessageDialog(null, "Barcode " + id + " was successfully deleted.");
-                        displayContents(db);
+                        displayContents();
                     } else {
                         JOptionPane.showMessageDialog(null,"Barcode " + id + " was not found please try again.");
                     }
@@ -94,11 +94,11 @@ public class Menu {
      * checks database if multiple select which barcode
      * if successfully check out it lets you know
      */
-    public static void checkOut(Database db){
+    public static void checkOut(){
         String bookName = JOptionPane.showInputDialog(null, "Please enter the title of the book you want to check out:");
         if (bookName != null) {
             StringBuilder avaBooks = new StringBuilder("Printing available books:\n");
-            Collection<Book> sameName = db.bookSearch(bookName);
+            Collection<Book> sameName = Database.bookSearch(bookName);
             for (Book book : sameName) {
                 if (!book.isCheckedOut()) {
                     avaBooks.append(book.toString()).append("\n");
@@ -110,9 +110,9 @@ public class Menu {
             if (barcodeInput != null) {
                 try {
                     int id = Integer.parseInt(barcodeInput);
-                    if (db.checkOut(id)) {
+                    if (Database.checkOut(id)) {
                         JOptionPane.showMessageDialog(null, "Successfully checked out.");
-                        db.print();
+                        Database.print();
                     } else {
                         JOptionPane.showMessageDialog(null, "The selected book is not available for checkout.");
                     }
@@ -129,11 +129,11 @@ public class Menu {
      * check in book with barcode
      * prints confirmation
      */
-     public static void checkIn(Database db){
+     public static void checkIn(){
          String bookName = JOptionPane.showInputDialog(null, "Please enter the title of the book you want to check in:");
          if (bookName != null) {
              StringBuilder checkedOutBooks = new StringBuilder("Printing checked out books:\n");
-             Collection<Book> sameName = db.bookSearch(bookName);
+             Collection<Book> sameName = Database.bookSearch(bookName);
              for (Book book : sameName) {
                  if (book.isCheckedOut()) {
                      checkedOutBooks.append(book.toString()).append("\n");
@@ -145,9 +145,9 @@ public class Menu {
              if (barcodeInput != null) {
                  try {
                      int id = Integer.parseInt(barcodeInput);
-                     if (db.checkIn(id)) {
+                     if (Database.checkIn(id)) {
                          JOptionPane.showMessageDialog(null, "Successfully checked in.");
-                         displayContents(db);
+                         displayContents();
                      } else {
                          JOptionPane.showMessageDialog(null, "The selected book is not checked out.");
                      }
@@ -159,9 +159,9 @@ public class Menu {
 
      }
 
-     public static void displayContents(Database db){
+     public static void displayContents(){
          JOptionPane.showMessageDialog(null, "Printing all books in database:");
-         db.print();
+         Database.print();
 
      }
 }
