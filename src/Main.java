@@ -1,4 +1,7 @@
+package com.rey.lms;
+
 import java.util.Collection;
+
 import java.util.Scanner;
 
 /**

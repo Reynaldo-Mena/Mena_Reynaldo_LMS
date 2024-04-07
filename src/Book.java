@@ -1,3 +1,5 @@
+package com.rey.lms;
+
 import java.util.Date;
 
 /**

@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+sourceSets {
+    main {
+        java {
+            srcDirs 'src'
+        }
+    }
+}
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+//    testImplementation(platform('org.junit:junit-bom:5.10.2'))
+//    testImplementation('org.junit.jupiter:junit-jupiter')
+//    implementation 'jupiter:junit-jupiter'
+//
+//    testRuntimeOnly('org.junit.platform:junit-platform-launcher')
+   // testImplementation 'org.junit.jupiter:junit-jupiter-api:5.2.0'
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    implementation 'org.junit.jupiter:junit-jupiter-api:5.5.1'
+}
+application {
+    mainClass = 'com.rey.lms.MainFrame'
+}
+test {
+    useJUnitPlatform()
+}

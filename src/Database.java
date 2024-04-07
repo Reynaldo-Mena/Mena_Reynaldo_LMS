@@ -1,3 +1,5 @@
+package com.rey.lms;
+
 import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
