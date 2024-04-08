@@ -11,46 +11,6 @@ import java.util.*;
  */
 public class Database {
 
-//   private Map<Integer,Book> collection;
-
-
-//    public Database() {
-//        this.collection = new HashMap<>();
-//    }
-
-    /**
-     * addFromFile
-     * method to add book to database from file
-     * @param filename
-     * reads data from a file of books and adds data to collection of books
-     * argument - filename
-     * @return boolean value
-     */
-//    public boolean addFromFile(String filename) {
-//
-//        try {
-//            File file = new File(filename);
-//            Scanner myReader = new Scanner(file);
-//            while (myReader.hasNextLine()) {
-//                String bookdata = myReader.nextLine();
-//                String[] dataArr = (bookdata.split(","));
-//                int id = Integer.parseInt(dataArr[0]);
-//                String title = dataArr[1];
-//                String author = dataArr[2];
-//
-//                Book book = new Book(id, author, title, "",false);
-//                collection.put(id, book);
-//
-//            }
-//            myReader.close();
-//        } catch (Exception e) {
-//            System.out.println("File does not exist, Please try again. ");
-//
-//            return false;
-//        }
-//        return true;
-//    }
-
     /**
      * remove
      *method called remove, removes books from the collection by barcode/id

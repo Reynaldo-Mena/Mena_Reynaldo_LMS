@@ -5,8 +5,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
+/**
+ * Reynaldo Mena
+ *Software Development 1 - CEN 3024c
+ * 4/7/2024
+ * Establishing connection to SQlite database
+ * as well as executing query's into database.
+ */
 public class JDBC {
 
+    /**
+     * getConn
+     * Method that coonnects IDE to SQLite database
+     *
+     */
     private static Connection getConn() {
         // connect();
         Connection connection = null;
@@ -33,10 +45,16 @@ public class JDBC {
         return connection;
     }
 
+    /**
+     * Method that executes connection
+     * @param conn
+     * @param sql
+     *
+     */
     private static Statement execute(Connection conn, String sql) {
         try {
             Statement statement = conn.createStatement();
-            createDb(statement); // create the db in case this is the first connection
+            createDb(statement);
             statement.execute(sql);
             return statement;
         } catch (SQLException e) {
@@ -45,6 +63,11 @@ public class JDBC {
         }
     }
 
+    /**
+     * Method/query that creats the database in SQlite
+     * @param statement
+     * @throws SQLException
+     */
     private static void createDb(Statement statement) throws SQLException {
         String sql = "CREATE TABLE IF NOT EXISTS books (\n"
                 + " id integer PRIMARY KEY,\n"
@@ -58,6 +81,10 @@ public class JDBC {
         statement.execute(sql);
     }
 
+    /**
+     * Method that gets all books in database
+     *
+     */
     public static List<Book> getAllBooks() {
         List<Book> books = new ArrayList<>();
 
@@ -70,8 +97,7 @@ public class JDBC {
                 String title = result.getString("title");
                 String author = result.getString("author");
                 String genre = result.getString("genre");
-                boolean checkedOut = result.getBoolean("checkedOut");
-                System.out.println(checkedOut);
+                boolean checkedOut = Boolean.parseBoolean(result.getString("checkedOut"));
                 String dueDateStr = result.getString("dueDate");
                 java.util.Date dueDate = dueDateStr.equals("null") ? null : new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(dueDateStr);;
 
@@ -84,6 +110,11 @@ public class JDBC {
         return books;
     }
 
+    /**
+     * Query that searches database for book by ID/barcode
+     * @param id
+     * @return
+     */
     public static Book getBookById(int id) {
         try (Connection conn = getConn()) {
             String sql = String.format("SELECT * FROM books WHERE id = %d;", id);
@@ -93,7 +124,7 @@ public class JDBC {
                 String title = result.getString("title");
                 String author = result.getString("author");
                 String genre = result.getString("genre");
-                boolean checkedOut = result.getBoolean("checkedOut");
+                boolean checkedOut = Boolean.parseBoolean(result.getString("checkedOut"));
                 String dueDateStr = result.getString("dueDate");
              //   Date dueDate = dueDateStr.equals("null") ? null : Date.valueOf(dueDateStr);
                 java.util.Date dueDate = dueDateStr.equals("null") ? null : new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(dueDateStr);;
@@ -108,6 +139,11 @@ public class JDBC {
         return null;
     }
 
+    /**
+     * Query that searches database to book by title
+     * @param title
+     * @return
+     */
     public static List<Book> getBooksByTitle(String title) {
         List<Book> books = new ArrayList<>();
 
@@ -119,7 +155,7 @@ public class JDBC {
                 int id = result.getInt("id");
                 String author = result.getString("author");
                 String genre = result.getString("genre");
-                boolean checkedOut = result.getBoolean("checkedOut");
+                boolean checkedOut = Boolean.parseBoolean(result.getString("checkedOut"));
                 String dueDateStr = result.getString("dueDate");
                // Date dueDate = dueDateStr.equals("null") ? null : Date.valueOf(dueDateStr);
                 java.util.Date dueDate = dueDateStr.equals("null") ? null : new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy").parse(dueDateStr);;
@@ -133,6 +169,11 @@ public class JDBC {
         return books;
     }
 
+    /**
+     * Query that allows you to add book to database
+     * @param book
+     * @return boolean
+     */
     public static boolean addBook(Book book) {
         try (Connection conn = getConn()) {
             String sql = String.format("INSERT INTO books (id, title, author, genre, checkedOut, dueDate) VALUES (\n"
@@ -157,6 +198,12 @@ public class JDBC {
         }
     }
 
+    /**
+     * Query that updates database
+     * Allows for update to check in/ check out
+     * @param book
+     * @return boolean
+     */
     public static boolean updateBook(Book book) {
         try (Connection conn = getConn()) {
             String sql = String.format("UPDATE books SET \n"
@@ -182,6 +229,11 @@ public class JDBC {
         }
     }
 
+    /**
+     * Query to remove book by ID/barcode
+     * @param id
+     * @return boolean
+     */
     // TODO: IMPLEMENT THIS
     public static boolean removeBook(int id) {
         try (Connection conn = getConn()) {
@@ -194,10 +246,14 @@ public class JDBC {
     }
     }
 
+    /**
+     * Main just used for Testing
+     * @param args
+     */
     public static void main(String[] args) {
         // for testing
 //        System.out.println(getBooksByTitle("tuesday"));
-       Book book = new Book(14, "jhrt", "dujg", "uher", false, null);
+   //    Book book = new Book(14, "jhrt", "dujg", "uher", false, null);
 
 
     }
